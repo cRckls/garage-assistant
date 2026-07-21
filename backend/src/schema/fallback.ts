@@ -1,10 +1,19 @@
 import type { FaultNote } from "./faultNote.js";
 
-export type ParseFaultResult =
-  | { status: "ok"; note: FaultNote }
-  | { status: "fallback"; note: FaultNote; reason: string };
+export interface OkResult {
+  status: "ok";
+  note: FaultNote;
+}
 
-export function buildFallbackResult(rawText: string, reason: string): ParseFaultResult {
+export interface FallbackResult {
+  status: "fallback";
+  note: FaultNote;
+  reason: string;
+}
+
+export type ParseFaultResult = OkResult | FallbackResult;
+
+export function buildFallbackResult(rawText: string, reason: string): FallbackResult {
   return {
     status: "fallback",
     reason,
