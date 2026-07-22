@@ -4,9 +4,7 @@ import { z } from "zod";
 export const faultNoteSchema = z.object({
   vehicleSummary: z.string(),
   mainSymptoms: z.array(z.string()).min(1),
-  likelyCause: z.string(),
   urgency: z.string(),
-  recommendedNextStep: z.string(),
   followUpQuestions: z.array(z.string()),
 });
 
@@ -31,26 +29,14 @@ export const faultNoteResponseSchema = {
       type: Type.ARRAY,
       items: { type: Type.STRING },
     },
-    likelyCause: {
-      type: Type.STRING,
-      description: "Likely cause or component, if inferable",
-    },
     urgency: {
       type: Type.STRING,
       description: "Urgency level or customer's preferred arrival time",
     },
-    recommendedNextStep: { type: Type.STRING },
     followUpQuestions: {
       type: Type.ARRAY,
       items: { type: Type.STRING },
     },
   },
-  required: [
-    "vehicleSummary",
-    "mainSymptoms",
-    "likelyCause",
-    "urgency",
-    "recommendedNextStep",
-    "followUpQuestions",
-  ],
+  required: ["vehicleSummary", "mainSymptoms", "urgency", "followUpQuestions"],
 };

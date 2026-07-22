@@ -7,10 +7,13 @@ We only have a few hours to work on this so the tech stack needs to be pragmatic
 The AI parsing step should produce a structured note with these fields:
 - vehicle summary (make/model/year if mentioned)
 - main symptoms
-- likely cause or component
 - urgency or arrival preference
-- recommended next step
 - follow-up questions for the customer
+
+Deliberately excludes a "likely cause" or "recommended next step" field — the
+human service adviser reviewing the note is better placed to judge cause and
+next steps than the AI's guess, so surfacing one risked anchoring their
+judgement.
 
 ## AI Provider
 Use the Google Gemini API (native structured/JSON output via `responseSchema`) through `@google/genai` — no third-party wrapper. Read the key from `GEMINI_API_KEY` in `.env`. Default to a fast, free-tier-friendly model (e.g. a Flash-tier model) since this is a structured extraction task, not open-ended generation — check the current model list at build time in case names have shifted.

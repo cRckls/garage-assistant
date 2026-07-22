@@ -3,9 +3,7 @@ import { validateFaultNote } from "./faultNote.js";
 const validNote = {
   vehicleSummary: "2018 Ford Fiesta",
   mainSymptoms: ["Grinding noise when turning"],
-  likelyCause: "Worn CV joint",
   urgency: "Thursday drop-off",
-  recommendedNextStep: "Inspect suspension and steering",
   followUpQuestions: ["Any recent pothole impacts?"],
 };
 
@@ -15,7 +13,7 @@ describe("validateFaultNote", () => {
   });
 
   it("rejects a note missing a required field", () => {
-    const { likelyCause, ...incomplete } = validNote;
+    const { urgency, ...incomplete } = validNote;
     expect(validateFaultNote(incomplete)).toBeNull();
   });
 

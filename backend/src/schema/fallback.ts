@@ -20,9 +20,7 @@ export function buildFallbackResult(rawText: string, reason: string): FallbackRe
     note: {
       vehicleSummary: rawText,
       mainSymptoms: [],
-      likelyCause: "",
       urgency: "",
-      recommendedNextStep: "Review manually — automatic parsing was unavailable.",
       followUpQuestions: [],
     },
   };

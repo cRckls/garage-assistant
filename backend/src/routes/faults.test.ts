@@ -28,9 +28,7 @@ describe("POST /api/faults/parse", () => {
     const note = {
       vehicleSummary: "2018 Ford Fiesta",
       mainSymptoms: ["Grinding noise"],
-      likelyCause: "Worn brake pads",
       urgency: "Thursday",
-      recommendedNextStep: "Book an inspection",
       followUpQuestions: ["Any other noises?"],
     };
     mockedParseFaultFromText.mockResolvedValueOnce(note);

@@ -13,9 +13,7 @@ describe("buildFallbackResult", () => {
     const result = buildFallbackResult("raw text", "some error");
 
     expect(result.note.mainSymptoms).toEqual([]);
-    expect(result.note.likelyCause).toBe("");
     expect(result.note.urgency).toBe("");
     expect(result.note.followUpQuestions).toEqual([]);
-    expect(result.note.recommendedNextStep).not.toBe("");
   });
 });
