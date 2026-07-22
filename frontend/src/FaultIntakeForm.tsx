@@ -2,7 +2,11 @@ import { Button, Field, Input, Progress, Textarea } from "@chakra-ui/react";
 import { useRef, useState } from "react";
 import type { ParseResult } from "./types";
 
-const API_BASE_URL = "http://localhost:4000";
+// Vite dev server (:5173) and the Express API (:4000) are separate
+// processes locally, so dev needs a cross-origin URL. In production the
+// backend serves this build from the same origin (backend/src/app.ts),
+// so a relative path is used there instead.
+const API_BASE_URL = import.meta.env.DEV ? "http://localhost:4000" : "";
 
 // Mirrors the backend's REQUEST_TIMEOUT_MS in geminiClient.ts — used only to
 // pace the progress bar, not an actual timeout on this end.
