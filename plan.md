@@ -21,7 +21,7 @@ Use the Google Gemini API (native structured/JSON output via `responseSchema`) t
 ## Architectural Constraints (Non-Negotiable)
 -NO Heavy Orchestration Frameworks: Do not pull in LangChain, Indexing/RAG engines, or complex agent systems. Use the native model SDK with explicit TypeScript typing and native JSON schema output / structured outputs.
 -Lightweight Footprint: The architecture must consist of a modular Node.js/Express backend and a clean Vite + React + TypeScript frontend. Keep data persistence simple—use local JSON file storage or an in-memory data store for state. Do not spin up databases (Prisma, PostgreSQL, MongoDB, etc.).
--Styling: Use Tailwind CSS for all styling — no hand-written raw CSS files beyond Tailwind's own entry point.
+-Styling: Use Tailwind CSS for layout/utility styling — no hand-written raw CSS files beyond Tailwind's own entry point. Chakra UI (v3) supplies specific interactive components (Textarea, Button, Badge) rather than raw HTML elements; the two coexist rather than one replacing the other.
 -Explicit Error Handling & Fallback UX: AI models are non-deterministic. Every API call must be safely wrapped. If the model fails or returns unexpected schemas, catch the error gracefully and return structured payloads that allow the frontend to fall back to a manual user entry workflow.
 -Timeouts count as failures: wrap the AI call with a request timeout so a slow/hung response triggers the same fallback path as an invalid schema, rather than leaving the UI hanging.
 
