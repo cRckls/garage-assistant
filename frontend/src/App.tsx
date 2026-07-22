@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { FaultIntakeForm } from "./FaultIntakeForm";
 import { SubmissionsTable } from "./SubmissionsTable";
-import { addSubmission, loadSubmissions } from "./storage";
+import { addSubmission, deleteSubmission, loadSubmissions } from "./storage";
 import type { FaultSubmission, ParseResult } from "./types";
 
 function App() {
@@ -14,21 +14,32 @@ function App() {
     setResult(null);
   }
 
-  function handleResult(rawText: string, parsed: ParseResult) {
-    setResult(parsed);
+  function handleResult(data: {
+    customerName: string;
+    customerPhone: string;
+    rawText: string;
+    result: ParseResult;
+  }) {
+    setResult(data.result);
     setSubmissions((prev) =>
       addSubmission(prev, {
         id: crypto.randomUUID(),
         createdAt: new Date().toISOString(),
-        rawText,
-        result: parsed,
+        customerName: data.customerName,
+        customerPhone: data.customerPhone,
+        rawText: data.rawText,
+        result: data.result,
       }),
     );
+  }
+  
+  function handleDelete(id: string) {
+    setSubmissions((prev) => deleteSubmission(prev, id));
   }
 
   return (
     <div className="flex min-h-screen flex-col">
-      <div className="flex flex-col gap-6 px-4 py-10 lg:px-12">
+      <div className="flex flex-col gap-6 px-4 py-10 lg:px-12 bg-gray-100">
         <h1 className="text-2xl font-semibold text-gray-900 dark:text-gray-100">
           Garage Assistant
         </h1>
@@ -42,7 +53,7 @@ function App() {
         {error && <p className="text-red-600 dark:text-red-400">{error}</p>}
 
         {result && (
-          <div className="flex flex-col gap-3 rounded-md border border-gray-300 p-4 dark:border-gray-600">
+          <div className="flex flex-col gap-3 rounded-md border border-gray-300 p-4 dark:border-gray-600 bg-white">
             {result.status === "fallback" && (
               <p className="rounded-md bg-yellow-100 px-3 py-2 text-sm text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200">
                 Automatic parsing was unavailable ({result.reason}). Please fill this note in manually.
@@ -80,11 +91,11 @@ function App() {
         )}
       </div>
 
-      <div className="flex flex-col gap-3 bg-gray-100 px-4 py-10 lg:px-12 dark:bg-gray-800">
+      <div className="flex flex-col gap-3 px-4 py-10 lg:px-12 dark:bg-gray-800">
         <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-          Submitted reports
+          Submitted queries
         </h2>
-        <SubmissionsTable submissions={submissions} />
+        <SubmissionsTable submissions={submissions} onDelete={handleDelete} />
       </div>
     </div>
   );

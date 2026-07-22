@@ -12,6 +12,8 @@ export type ParseResult =
 export interface FaultSubmission {
   id: string;
   createdAt: string;
+  customerName: string;
+  customerPhone: string;
   rawText: string;
   result: ParseResult;
 }

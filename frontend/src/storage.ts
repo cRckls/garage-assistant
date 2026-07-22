@@ -9,6 +9,8 @@ function isFaultSubmission(value: unknown): value is FaultSubmission {
   return (
     typeof v.id === "string" &&
     typeof v.createdAt === "string" &&
+    typeof v.customerName === "string" &&
+    typeof v.customerPhone === "string" &&
     typeof v.rawText === "string" &&
     typeof v.result === "object" &&
     v.result !== null
@@ -45,6 +47,12 @@ export function addSubmission(
   submission: FaultSubmission,
 ): FaultSubmission[] {
   const next = [submission, ...submissions];
+  saveSubmissions(next);
+  return next;
+}
+
+export function deleteSubmission(submissions: FaultSubmission[], id: string): FaultSubmission[] {
+  const next = submissions.filter((submission) => submission.id !== id);
   saveSubmissions(next);
   return next;
 }

@@ -1,4 +1,4 @@
-import { Button, Progress, Textarea } from "@chakra-ui/react";
+import { Button, Field, Input, Progress, Textarea } from "@chakra-ui/react";
 import { useRef, useState } from "react";
 import type { ParseResult } from "./types";
 
@@ -10,16 +10,26 @@ const REQUEST_TIMEOUT_MS = 30_000;
 
 interface FaultIntakeFormProps {
   onSubmitStart: () => void;
-  onResult: (rawText: string, result: ParseResult) => void;
+  onResult: (data: {
+    customerName: string;
+    customerPhone: string;
+    rawText: string;
+    result: ParseResult;
+  }) => void;
   onError: (message: string) => void;
 }
 
 export function FaultIntakeForm({ onSubmitStart, onResult, onError }: FaultIntakeFormProps) {
+  const [customerName, setCustomerName] = useState("");
+  const [customerPhone, setCustomerPhone] = useState("");
   const [rawText, setRawText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [progress, setProgress] = useState(0);
   const [showProgress, setShowProgress] = useState(false);
   const progressIntervalRef = useRef<number | null>(null);
+
+  const canSubmit =
+    customerName.trim().length > 0 && customerPhone.trim().length > 0 && rawText.trim().length > 0;
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -46,7 +56,7 @@ export function FaultIntakeForm({ onSubmitStart, onResult, onError }: FaultIntak
       }
 
       const parsed: ParseResult = await res.json();
-      onResult(rawText, parsed);
+      onResult({ customerName, customerPhone, rawText, result: parsed });
     } catch {
       onError("Couldn't reach the server. Is the backend running?");
     } finally {
@@ -62,20 +72,47 @@ export function FaultIntakeForm({ onSubmitStart, onResult, onError }: FaultIntak
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-      <Textarea
-        value={rawText}
-        onChange={(e) => setRawText(e.target.value)}
-        placeholder="Write your query for the garage here..."
-        rows={6}
-        disabled={isLoading}
-      />
+      <Field.Root required>
+        <Field.Label>
+          Name
+        </Field.Label>
+        <Input
+          value={customerName}
+          onChange={(e) => setCustomerName(e.target.value)}
+          disabled={isLoading}
+          className="bg-white"
+        />
+      </Field.Root>
+      <Field.Root required>
+        <Field.Label>
+          Telephone
+        </Field.Label>
+        <Input
+          type="tel"
+          value={customerPhone}
+          onChange={(e) => setCustomerPhone(e.target.value)}
+          disabled={isLoading}
+          className="bg-white"
+        />
+      </Field.Root>
+      <Field.Root required>
+        <Field.Label>Query</Field.Label>
+        <Textarea
+          value={rawText}
+          onChange={(e) => setRawText(e.target.value)}
+          placeholder="Write your query for the garage here..."
+          rows={6}
+          disabled={isLoading}
+          className="bg-white"
+        />
+      </Field.Root>
       <Button
         type="submit"
         alignSelf="start"
         colorPalette="blue"
         loading={isLoading}
         loadingText="Processing your request..."
-        disabled={isLoading || rawText.trim().length === 0}
+        disabled={isLoading || !canSubmit}
       >
         Send request
       </Button>

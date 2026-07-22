@@ -7,6 +7,8 @@ export const seedSubmissions: FaultSubmission[] = [
   {
     id: "seed-0001",
     createdAt: "2026-07-20T09:00:00.000Z",
+    customerName: "Alex Turner",
+    customerPhone: "07700 900123",
     rawText:
       "Hi, my 2018 Ford Fiesta is making a really loud grinding noise when I turn left, particularly at slow speeds like when parking. Also, the tire pressure warning light came on this morning. Can I drop it off Thursday?",
     result: {
@@ -29,6 +31,8 @@ export const seedSubmissions: FaultSubmission[] = [
   {
     id: "seed-0002",
     createdAt: "2026-07-20T09:05:00.000Z",
+    customerName: "Priya Shah",
+    customerPhone: "07700 900456",
     rawText:
       "The engine is making a weird clicking sound and losing power when going uphill. It's a silver Vauxhall Corsa. I think it might be the spark plugs but I'm not sure. Oh, and the windscreen wipers need replacing too.",
     result: {
@@ -52,6 +56,8 @@ export const seedSubmissions: FaultSubmission[] = [
   {
     id: "seed-0003",
     createdAt: "2026-07-20T09:10:00.000Z",
+    customerName: "Sam Whitfield",
+    customerPhone: "07700 900789",
     rawText:
       "Hi, my car (A red toyota yaris, 2016) is making a strange whirring noise when I wind down the front passenger window. It's been getting worse over the last 3 months and I'm worried it's going to get stuck. Can you take a look asap please?",
     result: {
