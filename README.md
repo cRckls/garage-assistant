@@ -1,6 +1,13 @@
-# Garage Fault Intake Assistant
+# Garage Assistant
 
 Turns a customer's free-text vehicle fault description into a structured, reviewable service note for a garage service adviser.
+
+Files of note:
+- plan.md - contains the initial plan with alterations made along the process
+- DEVELOPMENT.md - a short log of the steps taken in the project, with reasoning on decisions.
+- excercise.md - The original coding exercise 
+
+# How to run the project
 
 ## Prerequisites
 
